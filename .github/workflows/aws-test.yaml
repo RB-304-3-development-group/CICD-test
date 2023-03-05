@@ -2,8 +2,12 @@
 
 name: CI
 # Controls when the workflow will run
+inputs:
+  bucket-name:
+    description: 'bucket name'
+    required: true
+
 on:
-  push:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -20,7 +24,9 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Test aws version
+      with:
+        BUCKET_NAME = ${{inputs.bucket-name}}
       run: |
-        aws s3api create-bucket --bucket my-bucket --region us-west-2
+        aws s3api create-bucket --bucket ${{BUCKET_NAME}} --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
         aws s3 ls
 
