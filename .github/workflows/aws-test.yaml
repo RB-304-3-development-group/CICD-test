@@ -25,9 +25,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Test aws version
-      with:
-        BUCKET_NAME = ${{github.event.inputs.bucket-name}}
       run: |
-        aws s3api create-bucket --bucket ${{BUCKET_NAME}} --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
+        aws s3api create-bucket --bucket ${{github.event.inputs.bucket-name}} --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
         aws s3 ls
 
