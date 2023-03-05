@@ -20,6 +20,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Test aws version
       run: |
+        aws s3api create-bucket --bucket my-bucket --region us-west-2
         aws s3 ls
-
 
